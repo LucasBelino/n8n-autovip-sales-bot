@@ -1,0 +1,1298 @@
+{
+  "name": "Main",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zapi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1712,
+        16
+      ],
+      "id": "92be5661-105d-4b72-ba17-bd0c392b226c",
+      "name": "Webhook",
+      "webhookId": "e6489660-3d8c-481a-a4a8-766775010114"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1ce4c1a7-3589-44e0-a607-d8a47cf11779",
+              "leftValue": "={{ $json.body.isGroup }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3a29c490-a334-4caf-b693-eaf7c625b2b9",
+              "leftValue": "={{ $json.body.isNewsletter }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ccb6d9ac-4ca9-432a-a662-c1dcdf12d888",
+              "leftValue": "={{ $json.body.broadcast }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b3384450-c731-48c7-acfb-3ec78738440a",
+              "leftValue": "={{ $json.body.fromApi }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1488,
+        16
+      ],
+      "id": "b21211fc-17f0-4e25-a215-9b5316d3d1d6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    },
+                    "id": "8b28bc8e-174f-4ec1-971e-6a5740db6fb3"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Novo Cliente"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ff6c6b29-8c70-4b98-95ec-7e1746a57891",
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "AGUARDANDO_CPF",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Recebendo CPF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "85a4a93b-af7b-4ae8-afb8-5b9ae105974e",
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "AGUARDANDO_MODELO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Modelo Desejado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "71a73f1c-6b85-4ad3-a1b9-ca85a1a3885f",
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "CADASTRADO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Menu Principal"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "957d1e45-e274-42e3-905d-78c3b508f0fd",
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "EM_ATENDIMENTO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Em Atendimento"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5cea4f08-f173-4cd1-a161-ac7c86ea4e8c",
+                    "leftValue": "={{ $('Webhook').item.json.body.text.message }}",
+                    "rightValue": "/encerrar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Encerrar Atendimento"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "0fc066be-721c-4394-ba1d-997fa6596301",
+                    "leftValue": "={{ $json.Etapa_Atual }}",
+                    "rightValue": "CADASTRADO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Continuar Cadastro"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        16
+      ],
+      "id": "d85890c2-bd21-4c51-9ec4-3eeab1c719ec",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "pO2jHpGjsHzFCEJo",
+          "mode": "id",
+          "cachedResultUrl": "/workflow/pO2jHpGjsHzFCEJo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        416
+      ],
+      "id": "4d5760a6-cd37-48e5-b46f-a37afd26e77a",
+      "name": "Call 'VendaIA'"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pO2jHpGjsHzFCEJo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        -464
+      ],
+      "id": "8ae83cab-37a5-4afa-9e24-3d8644c16638",
+      "name": "Call 'VendaIA'1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "229e6b40-f043-40bf-957d-2309b8f8a7c6",
+                    "leftValue": "={{ $('Webhook').item.json.body.text.message }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Comprar Veiculo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3515b572-c142-4de3-b5ad-797e1ab60797",
+                    "leftValue": "={{ $('Webhook').item.json.body.text.message }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Falar com Atendente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        336
+      ],
+      "id": "bf96634a-d9db-401c-9e26-8235d4594422",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Telefone": "={{ $('Webhook').item.json.body.phone }}",
+            "CPF": "={{ $('Webhook').item.json.body.text.message }}",
+            "Etapa_Atual": "AGUARDANDO_MODELO"
+          },
+          "matchingColumns": [
+            "Telefone"
+          ],
+          "schema": [
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modelo Desejado",
+              "displayName": "Modelo Desejado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Etapa_Atual",
+              "displayName": "Etapa_Atual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -624,
+        -256
+      ],
+      "id": "57b03987-46f1-4cac-a65d-b0e8876c1a4a",
+      "name": "UpdCPF",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Telefone": "={{ $('Webhook').item.json.body.phone }}",
+            "Etapa_Atual": "CADASTRADO",
+            "Modelo Desejado": "={{ $('Webhook').item.json.body.text.message }}"
+          },
+          "matchingColumns": [
+            "Telefone"
+          ],
+          "schema": [
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modelo Desejado",
+              "displayName": "Modelo Desejado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Etapa_Atual",
+              "displayName": "Etapa_Atual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -624,
+        -464
+      ],
+      "id": "acaa3b17-7c78-4e6b-936e-b5e8b2453e96",
+      "name": "UpdModelo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Telefone",
+              "lookupValue": "={{ $('Webhook').item.json.body.phone }}"
+            }
+          ]
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "detectAutomatically"
+            }
+          },
+          "outputFormatting": {
+            "values": {
+              "general": "FORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1248,
+        16
+      ],
+      "id": "0b838455-1c94-49b3-96e5-fde38696a3e3",
+      "name": "GetUser",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Telefone": "={{ $('Webhook').item.json.body.phone }}",
+            "Nome": "={{ $('Webhook').item.json.body.senderName }}",
+            "Etapa_Atual": "AGUARDANDO_CPF"
+          },
+          "matchingColumns": [
+            "Nome"
+          ],
+          "schema": [
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modelo Desejado",
+              "displayName": "Modelo Desejado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Etapa_Atual",
+              "displayName": "Etapa_Atual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "17c59e4b-a238-4c42-bcb0-674550f8f4b4",
+      "name": "NewUser",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "wOEuDgFqtf9cRr7G",
+          "mode": "id",
+          "cachedResultUrl": "/workflow/wOEuDgFqtf9cRr7G"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        576
+      ],
+      "id": "d3d09871-9d30-4f25-949d-2b1904dfcfda",
+      "name": "Call 'Atendimento'"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Telefone": "={{ $('Webhook').item.json.body.phone }}",
+            "Etapa_Atual": "CADASTRADO"
+          },
+          "matchingColumns": [
+            "Telefone"
+          ],
+          "schema": [
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modelo Desejado",
+              "displayName": "Modelo Desejado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Etapa_Atual",
+              "displayName": "Etapa_Atual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -288,
+        160
+      ],
+      "id": "20dae31c-10c5-443f-a679-0227c326d7fd",
+      "name": "UpdAtendimento",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3EDDB238B84BE2D808DB0203B614D70E/token/FA088889F8C3DEA12CEDEB46/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "client-token",
+              "value": "Ff0eaeb5f7fb64efaa2bc8552a211807aS"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "5532999984111"
+            },
+            {
+              "name": "message",
+              "value": "=Atendimento encerrado, foi um prazer ajuda-lo ☺️"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        48,
+        160
+      ],
+      "id": "3b002351-75f2-4e58-8526-e73d1df73767",
+      "name": "PostEncerraChat"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3EDDB238B84BE2D808DB0203B614D70E/token/FA088889F8C3DEA12CEDEB46/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "client-token",
+              "value": "Ff0eaeb5f7fb64efaa2bc8552a211807aS"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "5532999984111"
+            },
+            {
+              "name": "message",
+              "value": "=Cadastro atualizado com sucesso ✅\n\nComo posso ajudar?\n\n1. Comprar Veículo Opções 🚗\n2. Falar com Atendente 👩‍💼\n\n𝘿𝙞𝙜𝙞𝙩𝙚 𝙤 𝙣𝙪́𝙢𝙚𝙧𝙤 𝙙𝙖 𝙤𝙥𝙘̧𝙖̃𝙤 𝙖𝙗𝙖𝙞𝙭𝙤"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -544,
+        336
+      ],
+      "id": "4449291d-0700-4db9-9386-d746e0face51",
+      "name": "PostOpcoesCadastrado"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3EDDB238B84BE2D808DB0203B614D70E/token/FA088889F8C3DEA12CEDEB46/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "client-token",
+              "value": "Ff0eaeb5f7fb64efaa2bc8552a211807aS"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "5532999984111"
+            },
+            {
+              "name": "message",
+              "value": "=Olá! Para realizarmos seu atendimento, por favor digite seu CPF (somente números)."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        48,
+        0
+      ],
+      "id": "c566821a-f3e6-42c6-8779-122fbbaf9f04",
+      "name": "PostReqCPF"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3EDDB238B84BE2D808DB0203B614D70E/token/FA088889F8C3DEA12CEDEB46/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "client-token",
+              "value": "Ff0eaeb5f7fb64efaa2bc8552a211807aS"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "5532999984111"
+            },
+            {
+              "name": "message",
+              "value": "=Cadastro finalizado! 🚗 \nAgora, me diga: qual modelo ou tipo de carro você procura? (Ex: SUV, Sedan, Honda Civic...)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -432,
+        -256
+      ],
+      "id": "a706ffec-d213-47bb-a321-9fc5b39be850",
+      "name": "PostModelo"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        240
+      ],
+      "id": "b2596890-35da-4703-91c5-888a9dc23323",
+      "name": "Close"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -336
+      ],
+      "id": "c409fd02-66ae-46c6-bfde-b81532ce8386",
+      "name": "Close1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "GetUser",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Close",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "NewUser",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "UpdCPF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "UpdModelo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "PostOpcoesCadastrado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Close1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "UpdAtendimento",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "UpdCPF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'VendaIA'": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Call 'VendaIA'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call 'Atendimento'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'VendaIA'1": {
+      "main": [
+        []
+      ]
+    },
+    "UpdCPF": {
+      "main": [
+        [
+          {
+            "node": "PostModelo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdModelo": {
+      "main": [
+        [
+          {
+            "node": "Call 'VendaIA'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetUser": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewUser": {
+      "main": [
+        [
+          {
+            "node": "PostReqCPF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Atendimento'": {
+      "main": [
+        []
+      ]
+    },
+    "UpdAtendimento": {
+      "main": [
+        [
+          {
+            "node": "PostEncerraChat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostOpcoesCadastrado": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostReqCPF": {
+      "main": [
+        [
+          {
+            "node": "Close1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostModelo": {
+      "main": [
+        [
+          {
+            "node": "Close1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostEncerraChat": {
+      "main": [
+        [
+          {
+            "node": "Close1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v0",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "7917fe7f-98d2-4313-a8f4-3e11ef32d380",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ea69296a4367270770c843a5295a66f19caf4aaeea52f4154a0893ab7d5f5380"
+  },
+  "id": "QlmAfDJlnxk7f8HRu2yM_",
+  "tags": []
+}

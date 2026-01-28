@@ -1,0 +1,542 @@
+{
+  "name": "VendaIA",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Telefone"
+            },
+            {
+              "name": "Etapa_Atual"
+            },
+            {
+              "name": "Modelo Desejado"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6bd7e5a6-668c-4541-9486-f1231f3faa3b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When Executed by Another Workflow').item.json.Telefone }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        368
+      ],
+      "id": "43bc09b4-faab-451f-8eb0-5f4d9cb1095e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "knowledge_base",
+        "toolDescription": "Use this knowledge base to answer questions from the user",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        1216,
+        352
+      ],
+      "id": "526641d1-2e20-4bef-9b54-449c157e9c8a",
+      "name": "Query Data Tool"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        656,
+        0
+      ],
+      "id": "0cf9aa92-8745-4c4e-8b97-78b486441834",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "Estoque_Veiculos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        480,
+        0
+      ],
+      "id": "26d638cb-e31b-40db-aa05-23dd5dfa10e4",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        240
+      ],
+      "id": "34844e5e-5d75-41de-8c83-eca578d9849f",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        512,
+        256
+      ],
+      "id": "cac88d62-14c8-4f8f-920d-31df999ea775",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j7kfCzN4rcgJVOWP",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        528
+      ],
+      "id": "ae8617eb-55a5-4415-8ab2-4c9efb3f1d22",
+      "name": "Embeddings Google Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j7kfCzN4rcgJVOWP",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        928,
+        224
+      ],
+      "id": "5f2a9383-d62b-4f03-8cc1-ebe7603b119a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j7kfCzN4rcgJVOWP",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "wOEuDgFqtf9cRr7G",
+          "mode": "id",
+          "cachedResultUrl": "/workflow/wOEuDgFqtf9cRr7G"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1680,
+        -96
+      ],
+      "id": "248e4fb3-f313-4128-b6a9-ccef555fcafb",
+      "name": "Call 'Atendimento'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80949bb8-7328-4b82-88a6-f50e58c5b2fd",
+              "name": "Modelo Desejado",
+              "value": "={{ $json['Modelo Desejado'] }}",
+              "type": "string"
+            },
+            {
+              "id": "759192a3-99f7-481e-80ba-266cac24d9b5",
+              "name": "Telefone",
+              "value": "={{ $json.Telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "09ff13f4-f47b-4449-8826-05e8ce9b003c",
+              "name": "Etapa_Atual",
+              "value": "={{ $json.Etapa_Atual }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        256,
+        0
+      ],
+      "id": "e9cc72ca-734a-4394-81bb-8a493eefd984",
+      "name": "Select Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When Executed by Another Workflow').item.json['Modelo Desejado'] }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Você é um consultor especializado em vendas de automóveis que trabalha para AutoVIP. Seu objetivo é orientar os clientes durante toda a jornada de vendas, desde a consulta inicial até o fechamento da venda.\n\nSuas responsabilidades:\n1. FASE DE ACREDITAÇÃO: Qualifique o cliente entendendo suas necessidades, orçamento, cronograma e preferências. Pergunte abertamente encerrou as perguntas para construir relacionamento.\n2. FASE DE APRESENTAÇÃO: Use a a sheet 'estoque' para achar o carro ideal correspondente. Destaque os recursos que atendem às necessidades declaradas. Lide com objeções com empatia e fatos.\n3. FASE DE NEGOCIAÇÃO: Aborde as preocupações com preços enfatizando o valor, não apenas o custo.\nOfereça test drives.\n4. FASE DE ENCERRAMENTO: Quando o cliente apresentar fortes sinais de compra (perguntar sobre disponibilidade, aprovação de financiamento, próximos passos), prepare-se para a transferência para o suporte humano para processamento de pagamentos.\n\nTRATAMENTO DE OBJEÇÕES:\n- Objeções de preço: divida o custo total em pagamentos mensais, enfatize o valor e a confiabilidade a longo prazo\n- Objeções de tempo: crie urgência com estoque limitado ou ofertas especiais.\n- Objeções à concorrência: reconheça os concorrentes, mas destaque vantagens exclusivas.\n- Objeções de recursos: Reformule como benefícios que resolvem seus problemas específicos.\n- Só ofereça carros que estão na lista retornada pela ferramenta. Não invente carros.\n- Sem Estoque: Se não tiver similar, sua resposta deve conter a frase exata: \"Iremos buscar o modelo ideal pra você, em breve entraremos em contato\".\n- Sua linguagem é persuasiva, profissional, mas amigável (Use emojis moderadamente 🚗)\n- Respostas curtas (máximo 2 parágrafos curtos). O WhatsApp é dinâmico.\n\nSEMPRE utilize a ferramenta de resposta do WhatsApp para enviar mensagens ao cliente. Seja conversador, entusiasmado, e consultivo.\n\nQuando o cliente estiver pronto para prosseguir com a compra (selecionou o veículo, discutiu o financiamento, está pronto para se comprometer), defina Estagio_De_Venda como 'FECHAR_VENDA' em sua resposta. Caso ele queira Test Drive. Defina Estagio_De_Venda como 'TEST_DRIVE'."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        944,
+        0
+      ],
+      "id": "e0eb92ca-1ed0-4c20-9e59-03bc31549b9e",
+      "name": "AI Agent - Saler",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Estagio_De_Venda }}",
+                    "rightValue": "FECHAR_VENDA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "94f308f7-9532-41cc-bf27-d88bc2af1ea4"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Fechar Venda"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "aec4e95b-fd13-4932-8fa7-a9734fabef6c",
+                    "leftValue": "={{ $json.Estagio_De_Venda }}",
+                    "rightValue": "TEST_DRIVE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Agendar Test Drive"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "ca99ca65-ee11-4303-9253-18a3bc569f28",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "siGFOvLoElfVGJFt"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1680,
+        96
+      ],
+      "id": "c3936f47-aa46-4fb9-8868-b965abb4c06f",
+      "name": "Execute 'Agenda TestDrive'"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"estagio_venda\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"enum\": [\n\t\t\t\t\"ACREDITACAO\",\n\t\t\t\t\"APRESENTACAO\",\n\t\t\t\t\"NEGOCIACAO\",\n\t\t\t\t\"FECHAR_VENDA\",\n\t\t\t\t\"TEST_DRIVE\",\n\t\t\t\t\"SEM_ESTOQUE\"\n\t\t\t],\n\t\t\t\"description\": \"Define o estágio atual baseado na conversa. OBRIGATÓRIO: Use 'FECHAR_VENDA' se o cliente der sinais de compra ou quiser falar com humano. Use 'TEST_DRIVE' se ele solicitar teste. Use 'SEM_ESTOQUE' se não houver carro similar.\"\n\t\t},\n\t\t\"resposta_whatsapp\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"description\": \"A mensagem de texto final que será enviada para o cliente. Deve ser persuasiva, profissional e curta (máx 2 parágrafos).\"\n\t\t},\n\t\t\"raciocinio\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"description\": \"Explique brevemente por que você escolheu este estágio de venda.\"\n\t\t}\n\t},\n\t\"required\": [\"estagio_venda\", \"resposta_whatsapp\", \"raciocinio\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1376,
+        208
+      ],
+      "id": "465092c1-b0ae-4c51-9756-d31afc4d4527",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent - Saler",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Data Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent - Saler",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Query Data Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store": {
+      "main": [
+        [
+          {
+            "node": "AI Agent - Saler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent - Saler",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Atendimento'": {
+      "main": [
+        []
+      ]
+    },
+    "Select Fields": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent - Saler": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Call 'Atendimento'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute 'Agenda TestDrive'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent - Saler",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "432ea7d3-2076-4179-bcb9-ff76c53cc639",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ea69296a4367270770c843a5295a66f19caf4aaeea52f4154a0893ab7d5f5380"
+  },
+  "id": "pO2jHpGjsHzFCEJo",
+  "tags": []
+}

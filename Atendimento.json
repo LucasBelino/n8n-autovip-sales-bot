@@ -1,0 +1,316 @@
+{
+  "name": "Atendimento",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Nome"
+            },
+            {
+              "name": "Telefone"
+            },
+            {
+              "name": "CPF"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        352
+      ],
+      "id": "2b395986-0a0a-4329-bc64-a580955bd7dc",
+      "name": "When Executed by Another Workflow",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI",
+          "mode": "list",
+          "cachedResultName": "AutoVIP_Controle",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1669536329,
+          "mode": "list",
+          "cachedResultName": "Novos Clientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HrnXg32YH0YFMq3N3ZynShAtjRCHDK-y4UZqMKCrTeI/edit#gid=1669536329"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Telefone": "={{ $json.telefone }}",
+            "Etapa_Atual": "EM_ATENDIMENTO"
+          },
+          "matchingColumns": [
+            "Telefone"
+          ],
+          "schema": [
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modelo Desejado",
+              "displayName": "Modelo Desejado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Etapa_Atual",
+              "displayName": "Etapa_Atual",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        688,
+        352
+      ],
+      "id": "b2dbb94a-5277-4b1a-a0b5-4cb80d5fc186",
+      "name": "UpdStatus",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "B5LZOCHIdbYouGem",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "455ea2c1-8ce8-4bb9-9ba1-0c3c830b0617",
+              "name": "nome",
+              "value": "={{ $json.Nome }}",
+              "type": "string"
+            },
+            {
+              "id": "e458c2a2-05e4-467f-853a-ac96b8e16335",
+              "name": "telefone",
+              "value": "={{ $json.Telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "a593e55f-3ac7-4be6-885e-e3d2a440b54c",
+              "name": "modelo_desejado",
+              "value": "={{ $json['Modelo Desejado'] }}",
+              "type": "string"
+            },
+            {
+              "id": "61a4910b-c395-46ac-87ae-42cfe924a108",
+              "name": "cpf",
+              "value": "={{ $json.CPF }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        352
+      ],
+      "id": "aa6e7d06-ff95-4248-a9dd-401bfce8d66c",
+      "name": "Select Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.z-api.io/instances/3EDDB238B84BE2D808DB0203B614D70E/token/FA088889F8C3DEA12CEDEB46/send-text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "client-token",
+              "value": "Ff0eaeb5f7fb64efaa2bc8552a211807aS"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone",
+              "value": "5532999984111"
+            },
+            {
+              "name": "message",
+              "value": "=Deixe sua mensagem abaixo, logo um de nossos atendentes irá assumir ☺️"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        864,
+        352
+      ],
+      "id": "1754182f-568c-4d57-b7d7-e9abe1957439",
+      "name": "PostAguarde"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        352
+      ],
+      "id": "4fb0fc0f-9f01-4b54-8ce5-6548aee25a35",
+      "name": "Close"
+    },
+    {
+      "parameters": {
+        "sendTo": "gerencia@autovip.com",
+        "subject": "NOVA VENDA EM ANDAMENTO!",
+        "emailType": "text",
+        "message": "=Uma nova venda está em andamento!  \n\nNome: {{ $('When Executed by Another Workflow').item.json.Nome }}\nModelo desejado: {{ $('When Executed by Another Workflow').item.json['Modelo Desejado'] }}\nStatus da venda: {{ $('When Executed by Another Workflow').item.json.Etapa_Atual }}\nTelefone: {{ $('When Executed by Another Workflow').item.json.Telefone }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1056,
+        352
+      ],
+      "id": "d152c012-1fc7-476a-928f-1b148a350653",
+      "name": "Send a message",
+      "webhookId": "14c99a8b-0380-4bb2-a311-568f39a7184b"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdStatus": {
+      "main": [
+        [
+          {
+            "node": "PostAguarde",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Fields": {
+      "main": [
+        [
+          {
+            "node": "UpdStatus",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostAguarde": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Close",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "87b23435-193b-4fca-ab4f-72370201689e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ea69296a4367270770c843a5295a66f19caf4aaeea52f4154a0893ab7d5f5380"
+  },
+  "id": "wOEuDgFqtf9cRr7G",
+  "tags": []
+}
